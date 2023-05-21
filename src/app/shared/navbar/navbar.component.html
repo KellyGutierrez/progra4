@@ -1,0 +1,542 @@
+<nav
+  class="navbar navbar-expand-lg navbar-light header-navbar {{
+    transparentBGClass
+  }}"
+  [ngClass]="{
+    'navbar-brand-center': menuPosition === 'Top',
+    'navbar-static':
+      menuPosition === 'Side' && config?.layout.navbar.type === 'Static',
+    'navbar-sticky':
+      menuPosition === 'Side' && config?.layout.navbar.type === 'Fixed',
+    'fixed-top': isSmallScreen && menuPosition === 'Top'
+  }"
+>
+  <div class="container-fluid navbar-wrapper">
+    <div class="navbar-header d-flex">
+      <div
+        class="navbar-toggle menu-toggle d-xl-none d-block float-left align-items-center justify-content-center"
+        data-toggle="collapse"
+        (click)="toggleSidebar()"
+      >
+        <i class="ft-menu font-medium-3"></i>
+      </div>
+      <ul class="navbar-nav" (clickOutside)="toggleSearchOpenClass(false)">
+        <li class="nav-item mr-2 d-none d-lg-block">
+          <a
+            class="nav-link apptogglefullscreen"
+            id="navbar-fullscreen"
+            href="javascript:;"
+            appToggleFullscreen
+            (click)="ToggleClass()"
+            ><i class=" {{ toggleClass }} font-medium-3"></i
+          ></a>
+        </li>
+        <li class="nav-item nav-search">
+          <a
+            class="nav-link nav-link-search"
+            id="navbar-search"
+            href="javascript:"
+            (click)="toggleSearchOpenClass(true)"
+            ><i class="ft-search font-medium-3"></i
+          ></a>
+          <div class="search-input {{ searchOpenClass }}">
+            <div class="search-input-icon">
+              <i class="ft-search font-medium-3"></i>
+            </div>
+            <input
+              [formControl]="control"
+              #search
+              class="input"
+              type="text"
+              placeholder="Explore Apex..."
+              tabindex="0"
+              autofocus
+              data-search="template-search"
+              [appAutocomplete]="autocomplete"
+              (keyup.enter)="onEnter()"
+              (keydown.esc)="onEscEvent()"
+              (keyup)="onSearchKey($event)"
+            />
+            <div
+              class="search-input-close"
+              (click)="toggleSearchOpenClass(false)"
+            >
+              <i class="ft-x font-medium-3"></i>
+            </div>
+
+            <app-autocomplete #autocomplete="appAutocomplete">
+              <ng-template appAutocompleteContent>
+                <ng-container
+                  *ngIf="listItems | filter : control.value as result"
+                >
+                  <app-option
+                    #searchResults
+                    *ngFor="let option of result"
+                    [url]="option.url"
+                    [value]="option.name"
+                    (click)="redirectTo(option.url)"
+                    (mouseenter)="removeActiveClass()"
+                  >
+                    <div
+                      class="d-flex align-items-center justify-content-between w-100"
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-start"
+                      >
+                        <i class="{{ option.icon }} mr-2"></i>
+                        <span>{{ option.name }}</span>
+                      </div>
+                    </div>
+                  </app-option>
+                  <app-option class="no-result" *ngIf="!result.length"
+                    >No results found.</app-option
+                  >
+                </ng-container>
+              </ng-template>
+            </app-autocomplete>
+          </div>
+        </li>
+      </ul>
+      <div class="navbar-brand-center">
+        <div class="navbar-header">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <div class="logo">
+                <a
+                  class="logo-text"
+                  [routerLink]="['/']"
+                  *ngIf="config?.layout.menuPosition === 'Top'"
+                >
+                  <div class="logo-img">
+                    <img class="logo-img" alt="Apex logo" [src]="logoUrl" />
+                  </div>
+                  <span class="text">APEX</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="navbar-container">
+      <div class="collapse navbar-collapse d-block" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li
+            class="i18n-dropdown dropdown nav-item mr-2"
+            display="dynamic"
+            ngbDropdown
+          >
+            <a
+              class="nav-link d-flex align-items-center dropdown-toggle dropdown-language"
+              id="dropdown-flag"
+              href="javascript:;"
+              data-toggle="dropdown"
+              ngbDropdownToggle
+              ><img
+                class="langimg selected-flag"
+                [src]="selectedLanguageFlag"
+                alt="flag"
+              /><span class="selected-language d-md-flex d-none">{{
+                selectedLanguageText
+              }}</span></a
+            >
+            <div
+              ngbDropdownMenu
+              class="dropdown-menu dropdown-menu-right text-left"
+              aria-labelledby="dropdown-flag"
+            >
+              <a
+                class="dropdown-item"
+                href="javascript:;"
+                data-language="en"
+                (click)="ChangeLanguage('en')"
+                ><img
+                  class="langimg mr-2"
+                  src="./assets/img/flags/us.png"
+                  alt="flag"
+                /><span class="font-small-3">English</span></a
+              ><a
+                class="dropdown-item"
+                href="javascript:;"
+                data-language="es"
+                (click)="ChangeLanguage('es')"
+                ><img
+                  class="langimg mr-2"
+                  src="./assets/img/flags/es.png"
+                  alt="flag"
+                /><span class="font-small-3">Spanish</span></a
+              ><a
+                class="dropdown-item"
+                href="javascript:;"
+                data-language="pt"
+                (click)="ChangeLanguage('pt')"
+                ><img
+                  class="langimg mr-2"
+                  src="./assets/img/flags/pt.png"
+                  alt="flag"
+                /><span class="font-small-3">Portuguese</span></a
+              >
+              <a
+                class="dropdown-item"
+                href="javascript:;"
+                data-language="de"
+                (click)="ChangeLanguage('de')"
+                ><img
+                  class="langimg mr-2"
+                  src="./assets/img/flags/de.png"
+                  alt="flag"
+                /><span class="font-small-3">German</span></a
+              >
+            </div>
+          </li>
+          <li
+            class="dropdown nav-item"
+            placement="bottom-left"
+            display="static"
+            ngbDropdown
+          >
+            <a
+              class="nav-link dropdown-toggle dropdown-notification p-0 mt-2"
+              id="drp-notification"
+              href="javascript:;"
+              data-toggle="dropdown"
+              ngbDropdownToggle
+              ><i class="ft-bell font-medium-3"></i
+              ><span class="notification badge badge-pill badge-danger"
+                >4</span
+              ></a
+            >
+            <ul
+              ngbDropdownMenu
+              class="notification-dropdown dropdown-menu dropdown-menu-media dropdown-menu-right m-0 overflow-hidden"
+            >
+              <li class="dropdown-menu-header">
+                <div
+                  class="dropdown-header d-flex justify-content-between m-0 px-3 py-2 white bg-primary"
+                >
+                  <div class="d-flex">
+                    <i
+                      class="ft-bell font-medium-3 d-flex align-items-center mr-2"
+                    ></i
+                    ><span class="noti-title">7 New Notification</span>
+                  </div>
+                  <span class="text-bold-400 cursor-pointer"
+                    >Mark all as read</span
+                  >
+                </div>
+              </li>
+              <li class="scrollable-container" [perfectScrollbar]>
+                <a
+                  class="d-flex justify-content-between"
+                  href="javascript:void(0)"
+                >
+                  <div class="media d-flex align-items-center">
+                    <div class="media-left">
+                      <div class="mr-3">
+                        <img
+                          class="avatar"
+                          src="assets/img/portrait/small/avatar-s-20.png"
+                          alt="avatar"
+                          height="45"
+                          width="45"
+                        />
+                      </div>
+                    </div>
+                    <div class="media-body">
+                      <h6 class="m-0">
+                        <span>Kate Young</span
+                        ><small class="grey lighten-1 font-italic float-right"
+                          >5 mins ago</small
+                        >
+                      </h6>
+                      <small class="noti-text">Commented on your photo</small>
+                      <h6 class="noti-text font-small-3 m-0">
+                        Great Shot John! Really enjoying the composition on this
+                        piece.
+                      </h6>
+                    </div>
+                  </div>
+                </a>
+                <a
+                  class="d-flex justify-content-between"
+                  href="javascript:void(0)"
+                >
+                  <div class="media d-flex align-items-center">
+                    <div class="media-left">
+                      <div class="mr-3">
+                        <img
+                          class="avatar"
+                          src="assets/img/portrait/small/avatar-s-11.png"
+                          alt="avatar"
+                          height="45"
+                          width="45"
+                        />
+                      </div>
+                    </div>
+                    <div class="media-body">
+                      <h6 class="m-0">
+                        <span>Andrew Watts</span
+                        ><small class="grey lighten-1 font-italic float-right"
+                          >49 mins ago</small
+                        >
+                      </h6>
+                      <small class="noti-text"
+                        >Liked your album: UI/UX Inspo</small
+                      >
+                    </div>
+                  </div>
+                </a>
+                <a
+                  class="d-flex justify-content-between read-notification"
+                  href="javascript:void(0)"
+                >
+                  <div class="media d-flex align-items-center py-0 pr-0">
+                    <div class="media-left">
+                      <div class="mr-3">
+                        <img
+                          src="assets/img/icons/sketch-mac-icon.png"
+                          alt="avatar"
+                          height="45"
+                          width="45"
+                        />
+                      </div>
+                    </div>
+                    <div class="media-body">
+                      <h6 class="m-0">Update</h6>
+                      <small class="noti-text">MyBook v2.0.7</small>
+                    </div>
+                    <div class="media-right">
+                      <div class="border-left">
+                        <div class="px-4 py-2 border-bottom">
+                          <h6 class="m-0 text-bold-600">Update</h6>
+                        </div>
+                        <div class="px-4 py-2 text-center">
+                          <h6 class="m-0">Close</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+                <a
+                  class="d-flex justify-content-between read-notification"
+                  href="javascript:void(0)"
+                >
+                  <div class="media d-flex align-items-center">
+                    <div class="media-left">
+                      <div class="avatar bg-primary bg-lighten-3 mr-3 p-1">
+                        <span class="avatar-content font-medium-2">LD</span>
+                      </div>
+                    </div>
+                    <div class="media-body">
+                      <h6 class="m-0">
+                        <span>Registration done</span
+                        ><small class="grey lighten-1 font-italic float-right"
+                          >6 hrs ago</small
+                        >
+                      </h6>
+                    </div>
+                  </div>
+                </a>
+                <div class="cursor-pointer">
+                  <div
+                    class="media d-flex align-items-center justify-content-between"
+                  >
+                    <div class="media-left">
+                      <div class="media-body">
+                        <h6 class="m-0">New Offers</h6>
+                      </div>
+                    </div>
+                    <div class="media-right">
+                      <div class="custom-switch custom-control">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          id="custom-switch-1111"
+                          checked
+                        />
+                        <label
+                          class="custom-control-label mr-1"
+                          for="custom-switch-1111"
+                        >
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="d-flex justify-content-between cursor-pointer read-notification"
+                >
+                  <div class="media d-flex align-items-center">
+                    <div class="media-left">
+                      <div class="avatar bg-danger bg-lighten-4 mr-3 p-1">
+                        <span class="avatar-content font-medium-2"
+                          ><i class="ft-heart text-danger"></i
+                        ></span>
+                      </div>
+                    </div>
+                    <div class="media-body">
+                      <h6 class="m-0">
+                        <span>Application approved</span
+                        ><small class="grey lighten-1 font-italic float-right"
+                          >18 hrs ago</small
+                        >
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+                <a
+                  class="d-flex justify-content-between read-notification"
+                  href="javascript:void(0)"
+                >
+                  <div class="media d-flex align-items-center">
+                    <div class="media-left">
+                      <div class="mr-3">
+                        <img
+                          class="avatar"
+                          src="assets/img/portrait/small/avatar-s-6.png"
+                          alt="avatar"
+                          height="45"
+                          width="45"
+                        />
+                      </div>
+                    </div>
+                    <div class="media-body">
+                      <h6 class="m-0">
+                        <span>Anna Lee</span
+                        ><small class="grey lighten-1 font-italic float-right"
+                          >27 hrs ago</small
+                        >
+                      </h6>
+                      <small class="noti-text">Commented on your photo</small>
+                      <h6 class="noti-text font-small-3 text-bold-500 m-0">
+                        Woah!Loving these colors! Keep it up
+                      </h6>
+                    </div>
+                  </div>
+                </a>
+                <div
+                  class="d-flex justify-content-between cursor-pointer read-notification"
+                >
+                  <div class="media d-flex align-items-center">
+                    <div class="media-left">
+                      <div class="avatar bg-info bg-lighten-4 mr-3 p-1">
+                        <div class="avatar-content font-medium-2">
+                          <i class="ft-align-left text-info"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="media-body">
+                      <h6 class="m-0">
+                        <span>Report generated</span
+                        ><small class="grey lighten-1 font-italic float-right"
+                          >35 hrs ago</small
+                        >
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+                <a
+                  class="d-flex justify-content-between read-notification"
+                  href="javascript:void(0)"
+                >
+                  <div class="media d-flex align-items-center">
+                    <div class="media-left">
+                      <div class="mr-3">
+                        <img
+                          class="avatar"
+                          src="assets/img/portrait/small/avatar-s-7.png"
+                          alt="avatar"
+                          height="45"
+                          width="45"
+                        />
+                      </div>
+                    </div>
+                    <div class="media-body">
+                      <h6 class="m-0">
+                        <span>Oliver Wright</span
+                        ><small class="grey lighten-1 font-italic float-right"
+                          >2 days ago</small
+                        >
+                      </h6>
+                      <small class="noti-text"
+                        >Liked your album: UI/UX Inspo</small
+                      >
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="dropdown-menu-footer">
+                <div
+                  class="noti-footer text-center cursor-pointer primary border-top text-bold-400 py-1"
+                >
+                  Read All Notifications
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li
+            class="dropdown nav-item mr-1"
+            placement="bottom-left"
+            display="static"
+            ngbDropdown
+          >
+            <a
+              class="nav-link dropdown-toggle user-dropdown d-flex align-items-end"
+              id="dropdownBasic2"
+              href="javascript:;"
+              data-toggle="dropdown"
+              ngbDropdownToggle
+            >
+              <div class="user d-md-flex d-none mr-2">
+                <span class="text-right">TuRonCita</span
+                ><span class="text-right text-muted font-small-3"
+                  >Available</span
+                >
+              </div>
+              <img
+                class="avatar"
+                src="data:image/jpeg;base64,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"
+                alt="avatar"
+                height="35"
+                width="35"
+              />
+            </a>
+            <div
+              class="dropdown-menu text-left dropdown-menu-right m-0 pb-0"
+              aria-labelledby="dropdownBasic2"
+              ngbDropdownMenu
+            >
+              <a class="dropdown-item" href="javascript:;">
+                <div class="d-flex align-items-center">
+                  <i class="ft-message-square mr-2"></i><span>Chat</span>
+                </div>
+              </a>
+              <a class="dropdown-item" href="javascript:;">
+                <div class="d-flex align-items-center">
+                  <i class="ft-edit mr-2"></i><span>Edit Profile</span>
+                </div>
+              </a>
+              <a class="dropdown-item" href="javascript:;">
+                <div class="d-flex align-items-center">
+                  <i class="ft-mail mr-2"></i><span>My Inbox</span>
+                </div>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" routerLink="/pages/login">
+                <div class="d-flex align-items-center">
+                  <i class="ft-power mr-2"></i><span>Logout</span>
+                </div>
+              </a>
+            </div>
+            <!-- START Notification Sidebar
+          </li>
+          <li class="nav-item d-none d-lg-block mr-2 mt-1">
+            <a class="nav-link notification-sidebar-toggle" (click)="toggleNotificationSidebar();"><i
+                class="ft-align-right font-medium-3"></i></a>
+          </li>
+          --></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,36 @@
+.alert-light-danger {
+  background-color: #FEEFD0 !important;
+  color: #F55252  !important;
+  border-color: #FEEFD0;
+}
+/* Ajustar la posición de la alerta */
+.swal2-popup {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+  max-width: 100%;
+  width: auto;
+  margin: 0;
+}
+
+/* Ajustar el tamaño de la alerta */
+.swal2-popup .swal2-modal {
+  font-size: 16px;
+}
+
+/* Ajustar el tamaño de los botones */
+.swal2-popup .swal2-actions button {
+  font-size: 16px;
+  padding: 10px 24px;
+}
+
+/* Ajustar la posición del título */
+.swal2-popup .swal2-title {
+  margin-bottom: 1em;
+}
+
+/* Ajustar la posición del mensaje */
+.swal2-popup .swal2-content {
+  margin-bottom: 1em;
+}

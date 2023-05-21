@@ -1,0 +1,64 @@
+:host ::ng-deep .p-organizationchart {
+  .p-person {
+    padding: 0;
+    border: 0 none;
+  }
+
+  .node-header,
+  .node-content {
+    padding: 0.5em 0.7rem;
+  }
+
+  .node-header {
+    background-color: #495ebb;
+    color: #ffffff;
+  }
+
+  .node-content {
+    text-align: center;
+    border: 1px solid #495ebb;
+  }
+
+  .node-content img {
+    border-radius: 50%;
+  }
+
+  .p-organizationchart-line-left {
+    margin: 0 auto;
+    height: 20px !important;
+  }
+  .p-organizationchart-line-down {
+    margin: 0 auto;
+    height: 20px;
+    width: 3px !important;
+    color: black !important;
+  }
+  .p-organizationchart-line-top {
+    border-top: 3px solid black;
+    border-color: #dee2e6;
+  }
+  .p-node-toggler {
+    background-color: gray !important;
+  }
+
+  .department-cfo {
+    background-color: #7247bc;
+    color: #ffffff;
+  }
+
+  .department-coo {
+    background-color: #a534b6;
+    color: #ffffff;
+  }
+
+  .department-cto {
+    background-color: #e9286f;
+    color: #ffffff;
+  }
+}
+
+.p-organizationchart-line-down {
+  margin: 0 auto;
+  height: 20px;
+  width: 10px;
+}

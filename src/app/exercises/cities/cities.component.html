@@ -1,0 +1,74 @@
+<head>
+  <link rel="stylesheet" src="cities.component.scss">
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css"
+  
+/>
+</head>
+<head>
+  <link rel="stylesheet" src="cities.component.scss">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+</head>
+<section id="ngx-datatable-basic">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header" style="text-align: center;">
+          <h4 style="color: blueviolet; "class="fa fa-plane"><i>Tabla de Ciudades</i></h4>
+        </div>
+        
+        <div class="card-content">
+          <div class="card-body">
+            <!-- ngx-datatable Basic -->
+            <ngx-datatable
+              [rows]="cities"
+              [rowHeight]="50"
+              class="ngx-datatable-custom"
+              [limit]="10"
+              [columnMode]="ColumnMode.force"
+              [headerHeight]="50"
+              [footerHeight]="30"
+              [scrollbarH]="false"
+            >
+            <ngx-datatable-column name="ID" prop="cityId" [width]="60" [cellClass]="'datatable-cell-id'">
+              <ng-template ngx-datatable-header-template let-value="value">
+                <i class="fa fa-car"></i> CityID
+              </ng-template>
+            </ngx-datatable-column>
+            
+
+            <ngx-datatable-column name="Nombre" prop="name" [width]="150">
+              <ng-template ngx-datatable-header-template let-value="value">
+                <i class="fa fa-star-o"></i> Nombre
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Actions" [width]="70">
+                <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                  <a (click)="setCityId(row.cityId); deleteAlert(cityId)">
+                    <i class="ft-trash-2 text-primary cursor-pointer mr-2"></i>
+                  </a>
+                  <a (click)="update(row.cityId, row.name)">
+                    <i class="ft-edit text-primary cursor-pointer"></i>
+                  </a>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable> <!-- Añade esta etiqueta de cierre -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="col">
+  <button
+    type="button"
+    class="ov-btn-grow-skew"
+    (click)="add()"
+  >
+    Añadir ciudad
+  </button>
+</div>
+

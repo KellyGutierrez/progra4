@@ -1,0 +1,70 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css"
+/>
+<section id="ngx-datatable-basic">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header" style="text-align: center;">
+          <h4 style="color: blueviolet; display: inline-block;"><i>Tabla de Aristas</i></h4>
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+            <!-- ngx-datatable Basic -->
+            <ngx-datatable
+              [rows]="edges"
+              [rowHeight]="50"
+              class="bootstrap core-bootstrap"
+              [limit]="10"
+              [columnMode]="ColumnMode.force"
+              [headerHeight]="50"
+              [footerHeight]="30"
+              [scrollbarH]="false"
+            >
+              <ngx-datatable-column
+                name="ID"
+                prop="edgeId"
+                [width]="60"
+              ></ngx-datatable-column>
+              <ngx-datatable-column
+                name="Origen"
+                prop="origin"
+                [width]="150"
+              ></ngx-datatable-column>
+              <ngx-datatable-column
+                name="Peso"
+                prop="weight"
+                [width]="150"
+              ></ngx-datatable-column>
+              <ngx-datatable-column
+                name="Destino"
+                prop="destiny"
+                [width]="150"
+              ></ngx-datatable-column>
+              <ngx-datatable-column name="Actions" [width]="70">
+                <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                  <a (click)="setEdgeId(row.edgeId); deleteAlert(edgeId)">
+                    <i class="ft-trash-2 text-primary cursor-pointer mr-2"></i>
+                  </a>
+                  <a (click)="update(row.edgeId,row.origin.cityId,row.weight,row.destiny.cityId)">
+                    <i class="ft-edit text-primary cursor-pointer"></i>
+                  </a>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable> <!-- Añade esta etiqueta de cierre -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="col">
+  <button
+    type="button"
+    class="ov-btn-grow-spin"
+    (click)="add()"
+  >
+    Añadir arista
+  </button>
+</div>

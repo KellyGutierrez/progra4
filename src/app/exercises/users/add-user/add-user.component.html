@@ -1,0 +1,101 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css"
+/>
+
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .row {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .row > div {
+    margin-bottom: 10px;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <div>
+      <h3 style="color: blueviolet;">
+        <i class="fa fa-user"></i> ID
+      </h3>
+      <input 
+        type="text"
+        id="id"
+        class="form-control"
+        placeholder="1045444545"
+      />
+    </div>
+    <div>
+      <h3 style="color: blueviolet;">
+        <i class="fa fa-address-card"></i> Nombre
+      </h3>
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        placeholder="Camilo"
+      />
+    </div>
+    <div>
+      <h3 style="color: blueviolet;"><i>Rol</i></h3>
+      <input
+        type="text"
+        id="role"
+        class="form-control"
+        placeholder="2"
+      />
+    </div>
+    <div>
+      <h3 style="color: blueviolet;"><i>Email</i></h3>
+      <input
+        type="text"
+        id="email"
+        class="form-control"
+        placeholder="cami@gmail.com"
+      />
+    </div>
+    <div>
+      <h3 style="color: blueviolet;"><i>Contraseña</i></h3>
+      <input
+        type="text"
+        id="password"
+        class="form-control"
+        placeholder="Min 8 caracteres"
+      />
+    </div>
+  </div>
+</div>
+
+
+    <div class="col">
+    <button type="button" class="ov-btn-grow-spin" (click)="add()">
+      Agregar usuario
+    </button>
+      </div>
+    <div class="col">
+    <button
+      type="button"
+      class="ov-btn-grow-spin"
+      (click)="back()"
+    >
+      Regresar
+    </button>
+  </div>

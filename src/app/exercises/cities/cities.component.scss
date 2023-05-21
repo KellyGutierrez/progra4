@@ -1,0 +1,117 @@
+/*** ESTILOS BOTÓN GROW SKEW ***/
+.ov-btn-grow-skew {
+    background: #fff; /* color de fondo */
+    color: #4741d7; /* color de fuente */
+    border: 2px solid #4741d7; /* tamaño y color de borde */
+    padding: 16px 20px;
+    border-radius: 3px; /* redondear bordes */
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    display: inline-block;
+  }
+  .ov-btn-grow-skew:hover {
+    color: #fff;/* color de fuente hover */
+  }
+  .ov-btn-grow-skew::after {
+    content: "";
+    background: #4741d7; /* color de fondo hover */
+    position: absolute;
+    z-index: -1;
+    padding: 16px 20px;
+    display: block;
+    left: -20%;
+    right: -20%;
+    top: 0;
+    bottom: 0;
+    transform: skewX(-45deg) scale(0, 1);
+    transition: all 0.3s ease;
+  }
+  .ov-btn-grow-skew:hover::after {
+    transition: all 0.3s ease-out;
+    transform: skewX(-45deg) scale(1, 1);
+    /*** ESTILOS BOTÓN GROW SPIN ***/
+.ov-btn-grow-spin {
+  background: #fff; /* color de fondo */
+  color: #4741d7; /* color de fuente */
+  border: 2px solid #4741d7; /* tamaño y color de borde */
+  padding: 16px 20px;
+  border-radius: 3px; /* redondear bordes */
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  display: inline-block;
+}
+.ov-btn-grow-spin:hover {
+  color: #fff;/* color de fuente hover */
+}
+.ov-btn-grow-spin::after {
+  content: "";
+  background: #4741d7; /* color de fondo hover */
+  position: absolute;
+  z-index: -1;
+  padding: 16px 20px;
+  display: block;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transform: scale(0, 0) rotate(-180deg);
+  transition: all 0.3s ease;
+}
+.datatable {
+  width: 100%;
+
+  .datatable-header {
+    font-weight: bold;
+    background-color: #f8f8f8;
+  }
+
+  .datatable-row {
+    &:hover {
+      background-color: #f2f2f2;
+    }
+  }
+
+  .datatable-column {
+    &.datatable-column-id {
+      text-align: center;
+    }
+
+    &.datatable-column-name {
+      font-style: italic;
+    }
+
+    &.datatable-column-role {
+      text-transform: uppercase;
+    }
+
+    &.datatable-column-email {
+      font-weight: bold;
+    }
+
+    &.datatable-column-actions {
+      text-align: center;
+
+      i {
+        margin-right: 5px;
+        font-size: 18px;
+      }
+
+      .ft-more-vertical {
+        color: #007bff;
+      }
+
+      .ft-edit {
+        color: #28a745;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+  }

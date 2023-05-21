@@ -1,0 +1,62 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css"
+/>
+<div class="container text-center">
+  <div class="row align-items-start">
+    <h3 style="color: blueviolet;"><i>ID</i></h3>
+    <input
+      type="text"
+      [(ngModel)]="edgeId"
+      name="edgeId"
+      class="form-control mb-1"
+      placeholder="Número de identificación de la arista"
+      value="{{ edgeId }}"
+      disabled
+    />
+    <h3 style="color: blueviolet;"><i>Origen</i></h3>
+    <select [(ngModel)]="origin" class="form-control mb-1" >
+      <option *ngFor="let city of cities" [value]="city.cityId" [selected]="city.cityId === origin">
+        {{ city.name }}
+      </option>
+    </select>
+    <h3 style="color: blueviolet;"><i>Peso</i></h3>
+    <input
+      type="number"
+      [(ngModel)]="weight"
+      name="weight"
+      class="form-control mb-1"
+      placeholder="Peso de la arista"
+      value="{{ weight }}"
+    />
+    <h3 style="color: blueviolet;"><i>Destino</i></h3>
+    <select [(ngModel)]="destiny" class="form-control mb-1">
+      <option
+        *ngFor="let city of cities"
+        [value]="city.cityId"
+        [selected]="city.cityId === destiny"
+      >
+        {{ city.name }}
+      </option>
+    </select>
+  </div>
+</div>
+
+<div class="col">
+  <button
+    type="button"
+    class="ov-btn-grow-spin"
+    (click)="updateEdge()"
+  >
+    Actualizar arista
+  </button>
+</div>
+<div class="col">
+  <button
+    type="button"
+    class="ov-btn-grow-spin"
+    (click)="back()"
+  >
+    Regresar
+  </button>
+</div>

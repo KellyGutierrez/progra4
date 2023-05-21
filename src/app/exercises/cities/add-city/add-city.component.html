@@ -1,0 +1,89 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css"
+/>
+
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .row {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .row > div {
+    margin-bottom: 10px;
+  }
+</style>
+
+<div class="container text-center">
+  <div class="row align-items-start">
+    <h3 style="color: blueviolet;"><i>ID</i></h3>
+    <input
+      type="text"
+      [(ngModel)]="id"
+      class="form-control mb-1"
+      placeholder="Número ID"
+    />
+    <h3 style="color: blueviolet;"><i>Nombre</i></h3>
+    <input
+      type="text"
+      [(ngModel)]="name"
+      name="name"
+      class="form-control mb-1"
+      placeholder="Nombre ciudad"
+    />
+  </div>
+</div>
+
+<style>
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    flex-direction: column;
+  }
+  
+  .button-container .col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+</style>
+
+<div class="button-container">
+  <div class="col">
+    <button
+      type="button"
+      class="ov-btn-grow-spin"
+      (click)="add()"
+    >
+      Agregar ciudad
+    </button>
+  </div>
+  <div class="col">
+    <button
+      type="button"
+      class="ov-btn-grow-spin"
+      (click)="back()"
+    >
+      Regresar
+    </button>
+  </div>
+</div>
+

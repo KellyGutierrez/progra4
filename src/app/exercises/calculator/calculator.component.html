@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <label type="text" id="result" class="form-control mb-3">{{result}}</label>
+          <div class="row">
+            <div class="col-3">
+              <button (click)="add('1')" class="btn btn-dark btn-block">1</button>
+            </div>
+            <div class="col-3">
+              <button (click)="add('2')" class="btn btn-dark btn-block">2</button>
+            </div>
+            <div class="col-3">
+              <button (click)="add('3')" class="btn btn-dark btn-block">3</button>
+            </div>
+            <div class="col-3">
+              <button (click)="add('+')" class="btn btn-danger btn-block">+</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3">
+              <button (click)="add('4')" class="btn btn-dark btn-block">4</button>
+            </div>
+            <div class="col-3">
+              <button (click)="add('5')" class="btn btn-dark btn-block">5</button>
+            </div>
+            <div class="col-3">
+              <button (click)="add('6')" class="btn btn-dark btn-block">6</button>
+            </div>
+            <div class="col-3">
+              <button (click)="add('-')" class="btn btn-danger btn-block">-</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3">
+              <button (click)="add('7')" class="btn btn-dark btn-block">7</button>
+            </div>
+            <div class="col-3">
+              <button (click)="add('8')" class="btn btn-dark btn-block">8</button>
+            </div>
+            <div class="col-3">
+              <button (click)="add('9')" class="btn btn-dark btn-block">9</button>
+            </div>
+            <div class="col-3">
+              <button (click)="add('*')" class="btn btn-danger btn-block">*</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3">
+              <button (click)="add('0')" class="btn btn-dark btn-block">0</button>
+            </div>
+            <div class="col-3">
+              <button (click)="add('.')" class="btn btn-danger btn-block">.</button>
+            </div>
+            <div class="col-3">
+              <button (click)="add('/')" class="btn btn-danger btn-block">/</button>
+            </div>
+            <div class="col-3">
+              <button (click)="evaluateExpr()" class="btn btn-danger btn-block">=</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button (click)="clear()" class="btn btn-warning btn-block mt-3">C</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

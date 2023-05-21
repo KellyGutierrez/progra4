@@ -1,0 +1,77 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css"
+/>
+<div class="container text-center">
+  <head>
+    <link rel="stylesheet" src="edit-user.component.scss">
+  </head>
+
+    <div class="row align-items-start">
+      <h3 style="color :blueviolet;"><i>ID</i></h3>
+      <input
+      type="text"
+      [(ngModel)]="userId"
+      name="id"
+      class="form-control mb-1"
+      placeholder="Numero ID"
+      value="{{ userId }}"
+      disabled
+    />
+    <h3 style="color: blueviolet;"><i>Nombre</i></h3>
+    <input
+      type="text"
+      [(ngModel)]="name"
+      name="name"
+      class="form-control mb-1"
+      placeholder="Nombre completo"
+      value="{{ name }}"
+    />
+    <h3 style="color: blueviolet;"><i>Rol</i></h3>
+    <input
+      type="text"
+      [(ngModel)]="rollNumber"
+      name="role"
+      class="form-control mb-1"
+      placeholder="Rol de usuario"
+      value="{{ rollNumber }}"
+    />
+    <h3 style="color: blueviolet;"><i>Email</i></h3>
+    <input
+      type="text"
+      [(ngModel)]="email"
+      name="email"
+      class="form-control mb-1"
+      placeholder="Correo electrónico"
+      value="{{ email }}"
+    />
+    <h3 style="color: blueviolet;"><i>Contraseña</i></h3>
+    <input
+      type="password"
+      [(ngModel)]="password"
+      name="password"
+      class="form-control mb-5"
+      placeholder="Contraseña"
+      value="{{ password }}"
+    />
+  </div>
+</div>
+
+<div class="col">
+  <button
+    type="button"
+    class="ov-btn-grow-spin"
+    (click)="updateUser()"
+  >
+    Actualizar usuario
+  </button>
+</div>
+<div class="col">
+  <button
+    type="button"
+    class="ov-btn-grow-spin"
+    (click)="back()"
+  >
+    Regresar
+  </button>
+</div>

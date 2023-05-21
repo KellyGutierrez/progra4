@@ -1,0 +1,32 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css"
+/>
+<div class="container text-center">
+    <head>
+        <link rel="stylesheet" src="dijkstra.component.scss">
+      </head>
+    <div class="row align-items-start">
+        <h3 style="color: blueviolet;"><i>Origen</i></h3>
+        <select [(ngModel)]="startId" class="form-control mb-1">
+            <option *ngFor="let city of cities" [value]="city.cityId">
+                {{ city.name }}
+            </option>
+            </select>
+            <h3 style="color: blueviolet;"><i>Destino</i></h3>
+        <select [(ngModel)]="endId" class="form-control mb-1">
+            <option *ngFor="let city of cities" [value]="city.cityId">
+                {{ city.name }}
+            </option>
+        </select>
+    </div>
+</div>
+<div class="col">
+    <button
+      type="button"
+      class="ov-btn-grow-spin"
+      (click)="getDijkstra()"
+    >
+      Calcular camino
+    </button>
+</div>

@@ -1,0 +1,49 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css"
+/>
+<div class="container text-center">
+  <head>
+    <link rel="stylesheet" src="edit-city.component.scss">
+  </head>
+  <div class="row align-items-start">
+    <h3 style="color: blueviolet;"><i>ID</i></h3>
+    <input
+      type="text"
+      [(ngModel)]="cityId"
+      name="id"
+      class="form-control mb-1"
+      placeholder="Número de identificación"
+      value="{{ cityId }}"
+      disabled
+    />
+    <h3 style="color: blueviolet;"><i>Nombre</i></h3>
+    <input
+      type="text"
+      [(ngModel)]="name"
+      name="name"
+      class="form-control mb-1"
+      placeholder="Nombre completo"
+      value="{{ name }}"
+    />
+  </div>
+</div>
+
+<div class="col">
+  <button
+    type="button"
+    class="ov-btn-grow-spin"
+    (click)="updateCity()"
+  >
+    Actualizar ciudad
+  </button>
+</div>
+<div class="col">
+  <button
+    type="button"
+    class="ov-btn-grow-spin"
+    (click)="back()"
+  >
+    Volver
+  </button>
+</div>
