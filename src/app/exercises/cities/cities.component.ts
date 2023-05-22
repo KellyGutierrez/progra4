@@ -3,6 +3,7 @@ import { ColumnMode } from "@swimlane/ngx-datatable";
 import { CityService } from "app/shared/services/city.service";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import { Router } from "@angular/router";
+import { EdgeService } from "app/shared/services/edge.service";
 
 @Component({
   selector: "app-cities",
@@ -10,15 +11,30 @@ import { Router } from "@angular/router";
   styleUrls: ["./cities.component.scss"],
 })
 export class CitiesComponent implements OnInit {
-  constructor(private cityService: CityService, private router: Router) {}
-  cities: any = [];
-  cityId: string;
+  constructor(
+    private cityService: CityService,
+    private router: Router,
+    private edgeService: EdgeService
+  ) {}
+  citiesList: any = [];
+  edges: any = [];
+  cityId: number;
 
   ngOnInit(): void {
     this.cityService.getCities().subscribe(
       (response) => {
         if (response.code === 200) {
-          this.cities = response.data;
+          this.citiesList = response.data;
+        }
+      },
+      (error) => {
+        console.log("Error en el servidor.");
+      }
+    );
+    this.edgeService.getEdges().subscribe(
+      (response) => {
+        if (response.code === 200) {
+          this.edges = response.data;
         }
       },
       (error) => {
@@ -26,17 +42,12 @@ export class CitiesComponent implements OnInit {
       }
     );
   }
-  setCityId(cityId: string) {
+  setCityId(cityId: number) {
     this.cityId = cityId;
   }
-  public rows = [this.cities];
-  public columns = [
-    { name: "ID", prop: "cityId" },
-    { name: "Name", prop: "name" },
-  ];
   public ColumnMode = ColumnMode;
 
-  deleteCity(id: string): void {
+  deleteCity(id: number): void {
     this.cityService.deleteCity(id).subscribe(
       (response) => {
         if (response.code === 200) {
@@ -44,12 +55,12 @@ export class CitiesComponent implements OnInit {
           this.cityService.getCities().subscribe(
             (response) => {
               if (response.code === 200) {
-                this.cities = response.data;
+                this.citiesList = response.data;
               }
             },
             (error) => {
               Swal.fire({
-                title: "Ocurrió un error",
+                title: "Ocurrió un errooor",
                 icon: "error",
                 confirmButtonText: "Volver",
               });
@@ -66,28 +77,43 @@ export class CitiesComponent implements OnInit {
       }
     );
   }
-  async deleteAlert(cityId: string) {
-    const { value: id } = await Swal.fire({
-      title: "Ingrese el ID de la ciudad a borrar",
-      input: "text",
-      inputLabel: "ID",
-      inputPlaceholder: "Número de ID",
-      icon: "warning",
-      inputAttributes: {
-        maxlength: 10,
-        autocapitalize: "off",
-        autocorrect: "off",
-      },
-    });
-    if (id === this.cityId) {
-      this.deleteCity(cityId);
-      Swal.fire({
-        title: "Ciudad eliminada",
-        icon: "success",
+  async deleteAlert(cityId: number) {
+    let flag = true;
+    for (let edge of this.edges) {
+      if (edge.origin == this.cityId || edge.detiny == this.cityId) {
+        flag = false;
+        break;
+      }
+    }
+    if (flag) {
+      const { value: id } = await Swal.fire({
+        title: "Para borrar ingrese el ID",
+        input: "text",
+        inputLabel: "ID",
+        inputPlaceholder: "123",
+        icon: "warning",
+        inputAttributes: {
+          maxlength: 10,
+          autocapitalize: "off",
+          autocorrect: "off",
+        },
       });
+      if (id == this.cityId) {
+        this.deleteCity(cityId);
+        Swal.fire({
+          title: "Se eliminó la ciudad",
+          icon: "success",
+        });
+      } else {
+        Swal.fire({
+          title: "ID incorrecta",
+          icon: "error",
+        });
+      }
     } else {
       Swal.fire({
-        title: "ID inválida",
+        title: "Esta acción no se puede realziar",
+        text: "Hay aristas relacionadas con estas ciudes",
         icon: "error",
       });
     }
@@ -95,7 +121,7 @@ export class CitiesComponent implements OnInit {
   add() {
     this.router.navigate(["exercises/addcity"]);
   }
-  update(cityId: string, name: string) {
+  update(cityId: number, name: string) {
     const queryParams = {
       cityId: cityId,
       name: name,

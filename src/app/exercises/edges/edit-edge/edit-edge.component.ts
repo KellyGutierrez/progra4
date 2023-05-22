@@ -12,8 +12,7 @@ import { tap } from "rxjs/operators";
 })
 export class EditEdgeComponent implements OnInit {
   cities: any = [];
-  countOrigin: number;
-  countDestiny: number;
+  edges: any = [];
   edgeId: string;
   origin: any;
   weight: number;
@@ -36,25 +35,17 @@ export class EditEdgeComponent implements OnInit {
       }
     );
   }
-  getCity(originId: string, destinyId: string) {
-    let countOrigin = 1;
-    let countDestiny = 1;
-    for (let city of this.cities) {
-      if (originId === city.cityId) {
-        this.origin = city;
-        this.countOrigin = countOrigin;
-      }
-      countOrigin++;
-    }
-    for (let city of this.cities) {
-      if (destinyId === city.cityId) {
-        this.destiny = city;
-        this.countDestiny = countDestiny;
-      }
-      countDestiny++;
-    }
-  }
   ngOnInit() {
+    this.edgeService.getEdges().subscribe(
+      (response) => {
+        if (response.code === 200) {
+          this.edges = response.data;
+        }
+      },
+      (error) => {
+        console.log("Error en el servidor.");
+      }
+    );
     this.edgeId = this.route.snapshot.queryParamMap.get("edgeId");
     this.origin = this.route.snapshot.queryParamMap.get("origin");
     this.weight = parseInt(this.route.snapshot.queryParamMap.get("weight"));
@@ -64,87 +55,68 @@ export class EditEdgeComponent implements OnInit {
     if (this.weight > 0) {
       if (this.origin === this.destiny) {
         Swal.fire({
-          title: "Error",
-          text: "Una arista no puede tener el mismo origen y destino",
+          title: "El origen y el destino son iguales",
           icon: "error",
           confirmButtonText: "Volver",
         });
       } else {
-        this.getCity(this.origin, this.destiny);
-        // Primero verifica si ya existe una arista con el mismo origen y destino
-        this.edgeService.getEdges().subscribe(
-          (response) => {
-            if (response.code === 200) {
-              const edges = response.data;
-              const existingEdge = edges.find(
-                (edge) =>
-                  (edge.origin.cityId === this.origin.cityId &&
-                    edge.destiny.cityId === this.destiny.cityId) ||
-                  (edge.origin.cityId === this.destiny.cityId &&
-                    edge.destiny.cityId === this.origin.cityId)
-              );
-              if (existingEdge && existingEdge.edgeId !== this.edgeId) {
-                // Ya existe una arista con el mismo origen y destino (excepto la actual)
-                Swal.fire({
-                  title: "Error",
-                  text: "No puede existir más de una arista con la misma ruta",
-                  icon: "error",
-                  confirmButtonText: "Volver",
-                });
-              } else {
-                // No existe una arista con el mismo origen y destino (excepto la actual), se puede actualizar el borde
-                const edge = {
-                  edgeId: this.edgeId,
-                  origin: this.countOrigin,
-                  weight: this.weight,
-                  destiny: this.countDestiny,
-                };
-                this.edgeService
-                  .updateEdge(this.edgeId, edge)
-                  .pipe(
-                    tap(
-                      (response) => {
-                        if (response.code === 200) {
-                          Swal.fire({
-                            title: "Arista actualizada",
-                            text: "Operación realizada con éxito",
-                            icon: "success",
-                            confirmButtonText: "Volver",
-                          }).then((result) => {
-                            if (result.isConfirmed) {
-                              this.router.navigate(["/exercises/edges"]);
-                            }
-                          });
-                        } else {
-                          Swal.fire({
-                            title: "Error",
-                            text: "Un error ha ocurrido",
-                            icon: "error",
-                            confirmButtonText: "Volver",
-                          });
-                        }
-                      },
-                      (error) => {
-                        Swal.fire({
-                          icon: "error",
-                          title: "Error en el servidor",
-                        });
-                      }
-                    )
-                  )
-                  .subscribe();
-              }
-            }
-          },
-          (error) => {
-            console.log("Error en el servidor.");
+        let flag = true;
+        for (let edge of this.edges) {
+          if (edge.origin == this.origin && edge.destiny == this.destiny || edge.origin == this.destiny && edge.destiny == this.origin) {
+            flag = false;
+            break;
           }
-        );
+        }
+        if (flag) {
+          // No existe una arista con el mismo origen y destino, se puede agregar la nueva arista
+          const edge = {
+            edgeId: this.edgeId,
+            origin: this.origin,
+            weight: this.weight,
+            destiny: this.destiny,
+          };
+          this.edgeService.addEdge(edge)
+            .pipe(
+              tap(
+                (response) => {
+                  if (response.code === 200) {
+                    Swal.fire({
+                      title: "Se actualizó la arista",
+                      icon: "success",
+                      confirmButtonText: "Volver",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        this.router.navigate(["/exercises/edges"]);
+                      }
+                    });
+                  } else {
+                    Swal.fire({
+                      title: "Error",
+                      text: "Un error ha ocurrido",
+                      icon: "error",
+                      confirmButtonText: "Volver",
+                    });
+                  }
+                },
+                (error) => {
+                  Swal.fire({
+                    icon: "error",
+                    title: "Error en el servidor",
+                  });
+                }
+              )
+            )
+            .subscribe();
+        } else {
+          Swal.fire({
+            icon:"error",
+            title:"Ruta existente"
+          })
+        }
       }
     } else {
       Swal.fire({
-        title: "Error",
-        text: "El peso mínimo de una arista debe ser 1",
+        title: "Peso inferior a 1",
         icon: "error",
         confirmButtonText: "Volver",
       });

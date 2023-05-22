@@ -9,7 +9,7 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
   styleUrls: ["./edit-city.component.scss"],
 })
 export class EditCityComponent implements OnInit {
-  cityId: string;
+  cityId: number;
   name: string;
   constructor(
     private router: Router,
@@ -18,7 +18,7 @@ export class EditCityComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.cityId = this.route.snapshot.queryParamMap.get("cityId");
+    this.cityId = parseInt(this.route.snapshot.queryParamMap.get("cityId"));
     this.name = this.route.snapshot.queryParamMap.get("name");
   }
 
@@ -31,11 +31,9 @@ export class EditCityComponent implements OnInit {
       (response) => {
         if (response.code === 200) {
           Swal.fire({
-            title: "Se guardaron los datos",
-            text: "Operación realizada con éxito",
-            type: "success",
+            title: "Se actualizaron los datos de la ciudad",
             icon: "success",
-            confirmButtonText: "Volver",
+            confirmButtonText: "Regresar",
           }).then((result) => {
             if (result.isConfirmed) {
               this.router.navigate(["/exercises/cities"]);
@@ -43,19 +41,19 @@ export class EditCityComponent implements OnInit {
           });
         } else {
           Swal.fire({
-            title: "Error",
+            title: "Oops...",
             text: "Un error ha ocurrido",
             icon: "error",
-            confirmButtonText: "Volver",
+            confirmButtonText: "Regresar",
           });
         }
       },
       (error) => {
         Swal.fire({
           title: "Error en el servidor",
-          text: "Un error ha ocurrido",
+          text: "Comuníquese con un administrador",
           icon: "error",
-          confirmButtonText: "Volver",
+          confirmButtonText: "Regresar",
         });
       }
     );

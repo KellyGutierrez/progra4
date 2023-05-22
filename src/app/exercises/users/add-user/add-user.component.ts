@@ -28,6 +28,7 @@ export class AddUserComponent implements OnInit {
       password: this.password,
       email: this.email,
     };
+    console.log(user);
     this.userService
       .addUser(user)
       .pipe(

@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { GenericResponse } from "../interfaces/interfaces";
 import { environment } from "environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class CityService {
   private env: any = environment;
@@ -20,7 +20,7 @@ export class CityService {
       .set("Authorization", token);
     return headers;
   }
-  public getCityById(id: string): Observable<GenericResponse> {
+  public getCityById(id: number): Observable<GenericResponse> {
     return this.client.get<GenericResponse>(this.env.baseUrl + `/city/${id}`, {
       headers: this.getHeadersRESTToken(),
     });
@@ -42,12 +42,15 @@ export class CityService {
     );
   }
 
-  public deleteCity(id: string): Observable<GenericResponse> {
-    return this.client.delete<GenericResponse>(this.env.baseUrl + `/city/${id}`, {
-      headers: this.getHeadersRESTToken(),
-    });
+  public deleteCity(id: number): Observable<GenericResponse> {
+    return this.client.delete<GenericResponse>(
+      this.env.baseUrl + `/city/${id}`,
+      {
+        headers: this.getHeadersRESTToken(),
+      }
+    );
   }
-  public updateUser(id: string, name: any): Observable<GenericResponse> {
+  public updateUser(id: number, name: any): Observable<GenericResponse> {
     return this.client.put<GenericResponse>(
       this.env.baseUrl + `/update/city/${id}`,
       name,
